@@ -1,0 +1,16 @@
+python-dotenv
+langchain
+langgraph
+bs4
+langchain-community
+langchain-groq
+langchain-experimental
+neo4j
+wikipedia
+tiktoken
+yfiles_jupyter_graphs
+sentence-transformers
+chromadb
+langchainhub
+langchain-nomic
+gradio
