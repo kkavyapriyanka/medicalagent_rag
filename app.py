@@ -21,9 +21,9 @@ warnings.filterwarnings("ignore")
 load_dotenv(find_dotenv())
 
 # %%
-GROQ_API_KEY = os.environ("GROQQ_API_KEY")
-LANGCHAIN_API_KEY = os.environ("LANGCHAIN_API_KEY")
-TAVILY_API_KEY = os.environ("TAVILY_API_KEY")
+GROQ_API_KEY = os.getenv("GROQQ_API_KEY")
+LANGCHAIN_API_KEY = os.getenv("LANGCHAIN_API_KEY")
+TAVILY_API_KEY = os.getenv("TAVILY_API_KEY")
 
 os.environ["GROQ_API_KEY"] = GROQ_API_KEY
 os.environ["LANGCHAIN_TRACING_V2"]="true"
