@@ -13,6 +13,6 @@ sentence-transformers
 chromadb
 langchainhub
 langchain-nomic
-gradio
+gradio==3.9
 fastapi
 uvicorn[standard]
