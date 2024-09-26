@@ -17,6 +17,9 @@ ENV HOME=/home/user \
 # Set the working directory to the user's home directory
 WORKDIR $HOME/app
 
+# Set the USER_AGENT environment variable
+ENV USER_AGENT="medical_rag/1.0"
+
 # Copy the current directory contents into the container at $HOME/app setting the owner to the user
 COPY --chown=user . $HOME/app
 
