@@ -10,6 +10,9 @@ COPY ./requirements.txt /code/requirements.txt
 # Install dependencies
 RUN pip install --no-cache-dir --upgrade -r /code/requirements.txt
 
+# Create a new user named "user" with user ID 1000
+RUN useradd -m -u 1000 user
+
 # Set the working directory to the user's home directory
 WORKDIR /home/user/app
 
@@ -19,23 +22,23 @@ ENV USER_AGENT="medical_rag/1.0"
 # Set the TRANSFORMERS_CACHE environment variable to a writable directory
 ENV TRANSFORMERS_CACHE="/home/user/.cache/huggingface/hub"
 
-# Create the cache directory and ensure it is writable
-RUN mkdir -p /home/user/.cache/huggingface/hub && \
-    chown -R user:user /home/user/.cache
+# Create the cache directory
+RUN mkdir -p /home/user/.cache/huggingface/hub
 
 # Copy the current directory contents into the container at /home/user/app
-COPY --chown=user . .
+# We copy as root and then change ownership to the user
+COPY . .
 
-# Find the path of Gradio and download the missing frpc file while in root context
+# Find the path of Gradio and download the missing frpc file
 RUN python3 -c "import gradio; print(gradio.__file__)" > /tmp/gradio_path.txt && \
     GRADIO_PATH=$(cat /tmp/gradio_path.txt | sed 's|/[^/]*$||') && \
-    curl -L -o /usr/local/lib/python3.11/site-packages/gradio/frpc_linux_amd64 https://cdn-media.huggingface.co/frpc-gradio-0.2/frpc_linux_amd64 && \
-    mv /usr/local/lib/python3.11/site-packages/gradio/frpc_linux_amd64 /usr/local/lib/python3.11/site-packages/gradio/frpc_linux_amd64_v0.2
+    curl -L -o $GRADIO_PATH/frpc_linux_amd64 https://cdn-media.huggingface.co/frpc-gradio-0.2/frpc_linux_amd64 && \
+    mv $GRADIO_PATH/frpc_linux_amd64 $GRADIO_PATH/frpc_linux_amd64_v0.2
 
-# Set up a new user named "user" with user ID 1000
-RUN useradd -m -u 1000 user
+# Change ownership of the entire app directory to the user
+RUN chown -R user:user /home/user
 
-# Switch to the "user" user after the file operations
+# Switch to the "user" user
 USER user
 
 # Expose the port for Gradio
