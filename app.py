@@ -526,8 +526,8 @@ demo = gr.Interface(
     description="Ask a health-related query and the chatbot will generate a response using Retrieval Augmented Generation.",
 )
 
-# if __name__ == "__main__":
-demo.launch(share=True, inline=True,debug=True)
+if __name__ == "__main__":
+    demo.launch(share=True, inline=True,debug=True)
 
 # %%
 
