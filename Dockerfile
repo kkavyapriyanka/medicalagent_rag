@@ -16,6 +16,13 @@ WORKDIR /home/user/app
 # Set the USER_AGENT environment variable
 ENV USER_AGENT="medical_rag/1.0"
 
+# Set the TRANSFORMERS_CACHE environment variable to a writable directory
+ENV TRANSFORMERS_CACHE="/home/user/.cache/huggingface/hub"
+
+# Create the cache directory and ensure it is writable
+RUN mkdir -p /home/user/.cache/huggingface/hub && \
+    chown -R user:user /home/user/.cache
+
 # Copy the current directory contents into the container at /home/user/app
 COPY --chown=user . .
 
