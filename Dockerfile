@@ -33,9 +33,8 @@ COPY . .
 RUN python3 -c "import gradio; print(gradio.__file__)" > /tmp/gradio_path.txt && \
     GRADIO_PATH=$(cat /tmp/gradio_path.txt | sed 's|/[^/]*$||') && \
     curl -L -o $GRADIO_PATH/frpc_linux_amd64 https://cdn-media.huggingface.co/frpc-gradio-0.2/frpc_linux_amd64 && \
-    mv $GRADIO_PATH/frpc_linux_amd64 $GRADIO_PATH/frpc_linux_amd64_v0.2 \
+    mv $GRADIO_PATH/frpc_linux_amd64 $GRADIO_PATH/frpc_linux_amd64_v0.2 && \
     chmod +x $GRADIO_PATH/frpc_linux_amd64_v0.2
-
 
 
 # Change ownership of the entire app directory to the user
